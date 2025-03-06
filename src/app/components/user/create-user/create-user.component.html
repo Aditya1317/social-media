@@ -1,0 +1,8 @@
+<h2>Create User</h2>
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <input type="text" placeholder="Name" formControlName="name">
+    <input type="email" placeholder="Email" formControlName="email">
+    <input type="text" placeholder="Contact Number" formControlName="contactNo">
+    <input type="password" placeholder="Password" formControlName="password">
+    <button type="submit">Create User</button>
+</form>
