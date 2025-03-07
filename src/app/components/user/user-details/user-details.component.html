@@ -1,0 +1,18 @@
+<div class="user-details-container">
+    <h2>User Details</h2>
+    <form>
+        <label>Name:</label>
+        <input [(ngModel)]="userData.name" name="name" readonly>
+
+        <label>Email:</label>
+        <input [(ngModel)]="userData.email" name="email" readonly>
+
+        <label>Contact No:</label>
+        <input [(ngModel)]="userData.contactNo" name="contactNo" readonly>
+
+        <!-- Password is hidden -->
+    </form>
+
+    <button (click)="updateUser()">Update</button>
+    <button (click)="goToProfile()">Profile</button>
+</div>

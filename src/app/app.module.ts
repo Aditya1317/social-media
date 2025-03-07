@@ -7,8 +7,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CreateUserComponent } from './components/user/create-user/create-user.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
+import { UserDetailsComponent } from './components/user/user-details/user-details.component';
+import { ProfileDetailsComponent } from './components/profile/profile-details/profile-details.component';
+import { UpdateUserDetailsComponent } from './components/user/update-user-details/update-user-details.component';
+import { AuthInterceptor } from './auth-interceptor.service.spec';
+import { HttpXSRFInterceptor } from './interceptors/http-xsrf.interceptor'; 
+
 
 
 @NgModule({
@@ -16,18 +22,30 @@ import { LoginComponent } from './components/login/login.component';
     AppComponent,
     CreateUserComponent,
     LoginComponent,
-    
-    
+    UserDetailsComponent,
+    ProfileDetailsComponent,
+    UpdateUserDetailsComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-  ReactiveFormsModule,
-  HttpClientModule,
-  FormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    FormsModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpXSRFInterceptor,
+      multi: true,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

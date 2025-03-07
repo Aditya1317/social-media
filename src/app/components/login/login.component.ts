@@ -15,6 +15,11 @@ export class LoginComponent {
   constructor(private http: HttpClient, private router: Router) {}
 
   login() {
+    if (!this.username || !this.password) {
+      this.errorMessage = 'Please enter username and password';
+      return;
+    }
+
     const loginData = {
       name: this.username,
       password: this.password,
@@ -26,16 +31,14 @@ export class LoginComponent {
       })
       .subscribe({
         next: (token: string) => {
-          localStorage.setItem('token', token); // Store the JWT token
-          this.router.navigate(['/create-user']); // Redirect after login
+          localStorage.setItem('token', token); // Store JWT token
+          alert('Login Successful'); 
+          this.router.navigate(['/user-details']); 
         },
-        error: () => {
+        error: (error) => {
+          console.error('Login failed:', error);
           this.errorMessage = 'Invalid username or password';
         },
       });
-  }
-
-  onsubmit() {
-    alert("Login Successful");
   }
 }
